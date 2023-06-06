@@ -72,4 +72,18 @@ socket.on("bye",(name)=>{
     addMessage(`${name} left!`);
 });
 socket.on('new_message', addMessage);
-socket.on('room_change',console.log);
+
+function showRooms(rooms){
+    const roomList = welcome.querySelector('ul');
+    roomList.innerHTML = '';
+    if(rooms.length === 0){
+        return;
+    }
+    rooms.forEach(room => {
+        const li = document.createElement('li');
+        li.innerText = room;
+        roomList.append(li);
+    });
+}
+socket.on('room_change', showRooms);x
+socket.on('room',showRooms);
