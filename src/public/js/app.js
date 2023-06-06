@@ -34,12 +34,14 @@ function handleNickSubmit(event){
         nickSpan.innerText = `Nick : ${nick}`;
     });
 }
-
-function showRoom(nick){
+function showRoomName(count){
+    const h3 = room.querySelector('h3');
+    h3.innerText = `Room ${roomName} (${count})`;
+}
+function showRoom(nick, count){
     welcome.hidden = true;
     room.hidden = false;
-    const h3 = room.querySelector('h3');
-    h3.innerText = `Room ${roomName}`;
+    showRoomName(count);
     const messageForm = room.querySelector('#msg');
     const nickForm = room.querySelector('#name');
     messageForm.addEventListener('submit',handleMessageSubmit);
@@ -65,11 +67,13 @@ function handleRoomSubmit(event){
 welcomeForm.addEventListener('submit',handleRoomSubmit);
 
 
-socket.on("welcome",(name)=>{
+socket.on("welcome",(name, count)=>{
     addMessage(`${name} joined!`);
+    showRoomName(count);
 });
-socket.on("bye",(name)=>{
+socket.on("bye",(name, count)=>{
     addMessage(`${name} left!`);
+    showRoomName(count);
 });
 socket.on('new_message', addMessage);
 
@@ -85,5 +89,5 @@ function showRooms(rooms){
         roomList.append(li);
     });
 }
-socket.on('room_change', showRooms);x
+socket.on('room_change', showRooms);
 socket.on('room',showRooms);
