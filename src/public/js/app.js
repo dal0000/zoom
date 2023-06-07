@@ -12,7 +12,7 @@ async function getMedia(){
         myFace.srcObject = myStream;
     } catch(e){
         const error = document.getElementById('error');
-        error.innerText = e;
+        error.innerText = navigator.mediaDevices;
     }
 }
 getMedia();
