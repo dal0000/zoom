@@ -16,4 +16,3 @@ async function getMedia(){
     }
 }
 getMedia();
-console.log(navigator.mediaDevices);

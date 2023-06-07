@@ -1,7 +1,6 @@
 import express from "express";
 import http from "http";
-import { Server } from "socket.io";
-import { instrument } from "@socket.io/admin-ui";
+import SocketIO from "socket.io";
 
 const app = express();
 app.set("view engine", "pug");
@@ -14,15 +13,6 @@ app.get("/*", (_, res) => res.redirect("/"));
 const handleListen = () => console.log('Listening on http://localhost:3000')
 
 const httpServer = http.createServer(app);
-const wsServer = new Server(httpServer, {
-    cors: {
-      origin: ["https://admin.socket.io"],
-      credentials: true
-    }
-});
-
-instrument(wsServer, {
-    auth: false,
-});
+const wsServer = SocketIO(httpServer);
 
 httpServer.listen(3000, handleListen);
