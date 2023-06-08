@@ -115,6 +115,9 @@ socket.on("offer", async offer => {
 socket.on('answer',answer=>{
     peerConnection.setRemoteDescription(answer);
 });
+socket.on("ice",ice => {
+    peerConnection.addIceCandidate(ice);
+});
 
 //RTC code
 function makeConnection() {
@@ -126,6 +129,5 @@ function makeConnection() {
 }
 
 function handleIce(data){
-    console.log("got icecandidate!");
-    console.log(data);
+    socket.emit("ice", data.candidate, roomName);
 }
